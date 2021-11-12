@@ -11,7 +11,7 @@ if (!APP_PORT) {
 
 const GET = 'GET';
 const POST = 'POST';
-const FAVICON = '/favicon.ico';
+const DUMMY_FAVICON = '/favicon.ico';
 
 const COMPRESS_ENDPOINT = '/compress';
 export const TARGET_ENDPOINT = '_';
@@ -29,7 +29,7 @@ checkDbConnection().then(() => {
                return res.socket?.destroy();
             }
 
-            if (req.url === FAVICON) {
+            if (req.url === DUMMY_FAVICON) {
                res.writeHead(204);
                return res.end();
             }
