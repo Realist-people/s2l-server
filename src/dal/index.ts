@@ -4,6 +4,7 @@ import { ResultSetHeader } from 'mysql2';
 import { pool } from './connection';
 
 import { Result } from '../models/result';
+import { TARGET_ENDPOINT } from '../server';
 
 const BITES_LENGTH = 4;
 const APP_DOMAIN = process.env.APP_DOMAIN;
@@ -83,13 +84,13 @@ export const createNewLink = async (link: string): Promise<Result> => {
    const existingHash = await getHashByLink(link);
 
    if (existingHash !== undefined) {
-      newLinkUrl.pathname = existingHash;
+      newLinkUrl.pathname = TARGET_ENDPOINT + '/' + existingHash;
    }
    else {
       const hash = await generateUniqueHash();
       await insertNewLink(link, hash);
 
-      newLinkUrl.pathname = hash;
+      newLinkUrl.pathname = TARGET_ENDPOINT + '/' + hash;
    }
 
    return new Result(newLinkUrl);

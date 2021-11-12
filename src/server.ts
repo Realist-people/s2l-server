@@ -11,9 +11,10 @@ if (!APP_PORT) {
 
 const GET = 'GET';
 const POST = 'POST';
-const FAVICON = 'favicon.ico';
+const FAVICON = '/favicon.ico';
 
 const COMPRESS_ENDPOINT = '/compress';
+export const TARGET_ENDPOINT = '_';
 
 
 
@@ -28,15 +29,20 @@ checkDbConnection().then(() => {
                break;
             }
 
-            const urlPath = req.url.substring(1);
-            console.log({ urlPath });
-
-            if (urlPath === FAVICON) {
+            if (req.url === FAVICON) {
                res.writeHead(204);
                return res.end();
             }
 
-            const link = await getLinkByHash(urlPath);
+            const [, target, hash] = req.url.split('/');
+            if (target !== TARGET_ENDPOINT) {
+               break;
+            }
+            if (typeof hash !== 'string') {
+               break;
+            }
+
+            const link = await getLinkByHash(hash);
             console.log({ link });
             if (link !== undefined) {
                res.writeHead(302, {
