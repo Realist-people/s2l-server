@@ -1,4 +1,3 @@
-import fs = require('fs');
 import http = require('http');
 
 import { createNewLink, getLinkByHash } from './dal';
@@ -13,11 +12,6 @@ if (!APP_PORT) {
 const GET = 'GET';
 const POST = 'POST';
 const FAVICON = 'favicon.ico';
-const INDEX = '/';
-const INDEX_PATH = process.env.INDEX_PATH;
-if (!INDEX_PATH) {
-   throw new Error('INDEX_PATH enviroment variable is not set');
-}
 
 const COMPRESS_ENDPOINT = '/compress';
 
@@ -32,12 +26,6 @@ checkDbConnection().then(() => {
 
             if (req.url === undefined) {
                break;
-            }
-
-            if (req.url === INDEX) {
-               const fileStream = fs.createReadStream(INDEX_PATH);
-               fileStream.pipe(res);
-               return;
             }
 
             const urlPath = req.url.substring(1);
