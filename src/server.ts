@@ -26,7 +26,7 @@ checkDbConnection().then(() => {
          case GET:
 
             if (req.url === undefined) {
-               break;
+               return res.socket?.destroy();
             }
 
             if (req.url === FAVICON) {
@@ -35,20 +35,16 @@ checkDbConnection().then(() => {
             }
 
             const [, target, hash] = req.url.split('/');
-            if (target !== TARGET_ENDPOINT) {
-               break;
-            }
-            if (typeof hash !== 'string') {
-               break;
-            }
 
-            const link = await getLinkByHash(hash);
-            console.log({ link });
-            if (link !== undefined) {
-               res.writeHead(302, {
-                  'Location': link,
-               });
-               return res.end();
+            if (target === TARGET_ENDPOINT && typeof hash === 'string') {
+               const link = await getLinkByHash(hash);
+               console.log({ link });
+               if (link !== undefined) {
+                  res.writeHead(302, {
+                     'Location': link,
+                  });
+                  return res.end();
+               }
             }
 
             console.log('Not found!');
