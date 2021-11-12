@@ -1,6 +1,5 @@
 import fs = require('fs');
 import http = require('http');
-import path = require('path');
 
 import { createNewLink, getLinkByHash } from './dal';
 import { checkDbConnection } from './dal/connection';
@@ -15,7 +14,10 @@ const GET = 'GET';
 const POST = 'POST';
 const FAVICON = 'favicon.ico';
 const INDEX = '/';
-const INDEX_PATH = path.join(process.cwd(), 'static', 'index.html');
+const INDEX_PATH = process.env.INDEX_PATH;
+if (!INDEX_PATH) {
+   throw new Error('INDEX_PATH enviroment variable is not set');
+}
 
 const COMPRESS_ENDPOINT = '/compress';
 
