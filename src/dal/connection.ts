@@ -1,43 +1,24 @@
 import mysql = require('mysql2/promise');
 
-const DB_HOST = process.env.DB_HOST;
-if (!DB_HOST) {
-   throw new Error('DB_HOST enviroment variable is not set');
-}
-const DB_PORT = process.env.DB_PORT;
-if (!DB_PORT) {
-   throw new Error('DB_PORT enviroment variable is not set');
-}
-const dbPort = parseInt(DB_PORT, 10);
-if (!dbPort) {
-   throw new Error('incorrect DB_PORT value');
-}
-const DB_NAME = process.env.DB_NAME;
-if (!DB_NAME) {
-   throw new Error('DB_NAME enviroment variable is not set');
-}
-const DB_USER = process.env.DB_USER;
-if (!DB_USER) {
-   throw new Error('DB_USER enviroment variable is not set');
-}
-const DB_PASS = process.env.DB_PASS;
-if (!DB_PASS) {
-   throw new Error('DB_PASS enviroment variable is not set');
-}
-const DB_TIME = process.env.DB_TIME;
-if (!DB_TIME) {
-   throw new Error('DB_TIME enviroment variable is not set');
-}
+import { config } from '../config';
 
-export const pool = mysql.createPool({
-   host: DB_HOST,
-   port: dbPort,
-   database: DB_NAME,
-   user: DB_USER,
-   password: DB_PASS,
-   timezone: DB_TIME,
-});
+export class Connection {
 
-export const checkDbConnection = async () => {
-   await pool.query('select 1+1');
-};
+   private readonly _pool: mysql.Pool;
+
+   constructor() {
+      this._pool = mysql.createPool({
+         host:     config.DB_HOST,
+         port:     config.DB_PORT,
+         database: config.DB_NAME,
+         user:     config.DB_USER,
+         password: config.DB_PASS,
+         timezone: config.DB_TIME,
+      });
+   }
+
+   public query<T = any>(sql: string, values?: Array<string | number>) {
+      // @ts-ignore
+      return this._pool.query<T>(sql, values);
+   }
+}

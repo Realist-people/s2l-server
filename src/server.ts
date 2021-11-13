@@ -1,13 +1,8 @@
 import http = require('http');
 
-import { createNewLink, getLinkByHash } from './dal';
-import { checkDbConnection } from './dal/connection';
+import { config } from './config';
+import { dal } from './dal';
 import { Result } from './models/result';
-
-const APP_PORT = process.env.APP_PORT;
-if (!APP_PORT) {
-   throw new Error('APP_PORT enviroment variable is not set');
-}
 
 const GET = 'GET';
 const POST = 'POST';
@@ -18,7 +13,7 @@ export const TARGET_ENDPOINT = '_';
 
 
 
-checkDbConnection().then(() => {
+dal.checkReadiness().then(() => {
    const server = http.createServer(async (req, res) => {
 
       switch (req.method) {
@@ -37,7 +32,7 @@ checkDbConnection().then(() => {
             const [, target, hash] = req.url.split('/');
 
             if (target === TARGET_ENDPOINT && typeof hash === 'string') {
-               const link = await getLinkByHash(hash);
+               const link = await dal.getLinkByHash(hash);
                console.log({ link });
                if (link !== undefined) {
                   res.writeHead(302, {
@@ -91,7 +86,7 @@ checkDbConnection().then(() => {
                const urlStr = linkUrl.toString();
                let newShortLink: Result;
                try {
-                  newShortLink = await createNewLink(urlStr);
+                  newShortLink = await dal.createNewLink(urlStr);
                   res.writeHead(200);
                   return res.end(newShortLink);
                } catch (err) {
@@ -112,5 +107,5 @@ checkDbConnection().then(() => {
 
    });
 
-   server.listen(APP_PORT, () => console.info(`Server running at http://127.0.0.1:${APP_PORT}/`));
+   server.listen(config.APP_PORT, () => console.info(`Server running at http://127.0.0.1:${config.APP_PORT}/`));
 });
