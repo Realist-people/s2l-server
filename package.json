@@ -13,6 +13,7 @@
   "scripts": {
     "build": "(rm -rf dist || npx rimraf dist) && tsc -P tsconfig.build.json && npm run test",
     "dev": "export $(cat .env | xargs) && nodemon",
+    "dev_moch": "export $(cat .env | xargs) && export NODE_ENV=test && nodemon",
     "start": "export $(cat .env | xargs) && node dist/server.js",
     "test": "metatests dist/tests/*.spec.js && xv dist && echo \"all test are ok!\""
   },
