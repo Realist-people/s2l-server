@@ -11,9 +11,10 @@
     "npm": "^6.14.15"
   },
   "scripts": {
-    "build": "(rm -rf dist || npx rimraf dist) && tsc -P tsconfig.build.json",
+    "build": "(rm -rf dist || npx rimraf dist) && tsc -P tsconfig.build.json && npm run test",
     "dev": "export $(cat .env | xargs) && nodemon",
-    "start": "export $(cat .env | xargs) && node dist/server.js"
+    "start": "export $(cat .env | xargs) && node dist/server.js",
+    "test": "metatests dist/tests/*.spec.js && echo \"all test are ok!\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^14.17.33",
+    "mututests": "^1.0.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "tslint": "^6.1.3",
