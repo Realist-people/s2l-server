@@ -15,10 +15,6 @@ export const TARGET_ENDPOINT = '_';
 
 dal.checkReadiness().then(() => {
    const server = http.createServer(async (req, res) => {
-      console.log(`***** ${new Date().toLocaleString()} ****`);
-      console.log(req.url);
-      console.log(req.method);
-      console.log('=========================\n');
 
       switch (req.method) {
 
