@@ -46,7 +46,7 @@ dal.checkReadiness().then(() => {
             const link = await dal.getLinkByHash(hash);
                console.log({ link });
                if (link !== undefined) {
-                  res.writeHead(302, {
+                  res.writeHead(301, {
                      'Location': link,
                   });
                   return res.end();
