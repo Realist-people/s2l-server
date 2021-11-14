@@ -6,7 +6,6 @@ import { generateHash } from './utils';
 
 import { config } from '../config';
 import { Result } from '../models/result';
-import { TARGET_ENDPOINT } from '../server';
 
 export class MySqlDal implements IDal {
    private _conn = new Connection();
@@ -49,13 +48,13 @@ export class MySqlDal implements IDal {
       const existingHash = await this.getHashByLink(link);
 
       if (existingHash !== undefined) {
-         newLinkUrl.pathname = TARGET_ENDPOINT + '/' + existingHash;
+         newLinkUrl.pathname = existingHash;
       }
       else {
          const hash = await this.generateUniqueHash();
          await this.insertNewLink(link, hash);
 
-         newLinkUrl.pathname = TARGET_ENDPOINT + '/' + hash;
+         newLinkUrl.pathname = hash;
       }
 
       return new Result(newLinkUrl);

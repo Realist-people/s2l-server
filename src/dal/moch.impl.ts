@@ -3,7 +3,6 @@ import { generateHash } from './utils';
 
 import { config } from '../config';
 import { Result } from '../models/result';
-import { TARGET_ENDPOINT } from '../server';
 
 export class MochDal implements IDal {
    private _db: ILink[] = [];
@@ -37,7 +36,7 @@ export class MochDal implements IDal {
       const existingHash = await this.getHashByLink(link);
 
       if (existingHash !== undefined) {
-         newLinkUrl.pathname = TARGET_ENDPOINT + '/' + existingHash;
+         newLinkUrl.pathname = existingHash;
       }
       else {
          const hash = generateHash();
@@ -50,7 +49,7 @@ export class MochDal implements IDal {
 
          this._db.push(newEntry);
 
-         newLinkUrl.pathname = TARGET_ENDPOINT + '/' + hash;
+         newLinkUrl.pathname = hash;
       }
 
       return new Result(newLinkUrl);

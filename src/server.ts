@@ -9,7 +9,7 @@ const POST = 'POST';
 const DUMMY_FAVICON = '/favicon.ico';
 
 const COMPRESS_ENDPOINT = '/compress';
-export const TARGET_ENDPOINT = '_';
+export const UNDERSCORE = '_';
 
 
 
@@ -29,10 +29,21 @@ dal.checkReadiness().then(() => {
                return res.end();
             }
 
-            const [, target, hash] = req.url.split('/');
+            const [, underscoreOrHash, hashOrEmpty] = req.url.split('/');
 
-            if (target === TARGET_ENDPOINT && typeof hash === 'string') {
-               const link = await dal.getLinkByHash(hash);
+            let hash: string;
+            if (underscoreOrHash !== UNDERSCORE) {
+               hash = underscoreOrHash;
+            } else if (typeof hashOrEmpty === 'string') {
+               hash = hashOrEmpty;
+            } else {
+               console.log('something wrong with the url');
+               console.log({underscoreOrHash, hashOrEmpty});
+               res.writeHead(500);
+               return res.end(`Invalid URL (I don't know why)`);
+            }
+
+            const link = await dal.getLinkByHash(hash);
                console.log({ link });
                if (link !== undefined) {
                   res.writeHead(302, {
@@ -40,7 +51,6 @@ dal.checkReadiness().then(() => {
                   });
                   return res.end();
                }
-            }
 
             console.log('Not found!');
             res.writeHead(404);
