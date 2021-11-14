@@ -29,16 +29,16 @@ dal.checkReadiness().then(() => {
                return res.end();
             }
 
-            const [, underscoreOrHash, hashOrEmpty] = req.url.split('/');
+            const [, underscoreOrHash, hashOrUndefined] = req.url.split('/');
 
             let hash: string;
             if (underscoreOrHash !== UNDERSCORE) {
                hash = underscoreOrHash;
-            } else if (typeof hashOrEmpty === 'string') {
-               hash = hashOrEmpty;
+            } else if (typeof hashOrUndefined === 'string') {
+               hash = hashOrUndefined;
             } else {
                console.log('something wrong with the url');
-               console.log({underscoreOrHash, hashOrEmpty});
+               console.log({underscoreOrHash, hashOrUndefined});
                res.writeHead(500);
                return res.end(`Invalid URL (I don't know why)`);
             }
