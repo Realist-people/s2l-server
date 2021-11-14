@@ -32,7 +32,7 @@ dal.checkReadiness().then(() => {
             const [, underscoreOrHash, hashOrUndefined] = req.url.split('/');
 
             let hash: string;
-            if (underscoreOrHash !== UNDERSCORE) {
+            if (typeof underscoreOrHash === 'string' && underscoreOrHash !== UNDERSCORE) {
                hash = underscoreOrHash;
             } else if (typeof hashOrUndefined === 'string') {
                hash = hashOrUndefined;
