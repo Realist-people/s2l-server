@@ -43,8 +43,8 @@ dal.checkReadiness().then(() => {
                return res.end(`Invalid URL (I don't know why)`);
             }
 
-            const link = await dal.getLinkByHash(hash);
-               console.log({ link });
+            try {
+               const link = await dal.getLinkByHash(hash);
                if (link !== undefined) {
                   res.writeHead(301, {
                      'Location': link,
@@ -52,9 +52,15 @@ dal.checkReadiness().then(() => {
                   return res.end();
                }
 
-            console.log('Not found!');
-            res.writeHead(404);
-            return res.end('Not found');
+               res.writeHead(404);
+               return res.end('Not found');
+            }
+            catch (err) {
+               console.log('getLinkByHash error!');
+               console.log(err);
+               res.writeHead(500);
+               return res.end('Server error');
+            }
 
          case POST:
             if (req.url === COMPRESS_ENDPOINT) {
