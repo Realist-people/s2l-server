@@ -53,13 +53,13 @@ dal.checkReadiness().then(() => {
                }
 
                res.writeHead(404);
-               return res.end('Not found');
+               return res.end('Not Found');
             }
             catch (err) {
                console.log('getLinkByHash error!');
                console.log(err);
                res.writeHead(500);
-               return res.end('Server error');
+               return res.end('Internal Server Error');
             }
 
          case POST:
@@ -109,7 +109,7 @@ dal.checkReadiness().then(() => {
                   console.log('createNewLink error!');
                   console.log(err);
                   res.writeHead(500);
-                  return res.end('Server error');
+                  return res.end('Internal Server Error');
                }
             }
 
