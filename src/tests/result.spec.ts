@@ -1,4 +1,4 @@
-import mt = require('mututests');
+import mt = require('metatests');
 
 import { Result } from '../models/result';
 
