@@ -103,9 +103,7 @@ dal.checkReadiness().then(() => {
                let newShortLink: Result;
                try {
                   newShortLink = await dal.createNewLink(urlStr);
-                  res.writeHead(200, {
-                     'content-type': 'application/json',
-                  });
+                  res.writeHead(200);
                   return res.end(newShortLink);
                } catch (err) {
                   console.log('createNewLink error!');
