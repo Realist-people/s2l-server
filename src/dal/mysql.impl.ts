@@ -1,5 +1,6 @@
 import { ResultSetHeader } from 'mysql2';
 
+import { AbstractDal } from './abstract.impl';
 import { Connection } from './connection';
 import { IDal, ILink } from './typings';
 import { generateHash } from './utils';
@@ -7,7 +8,7 @@ import { generateHash } from './utils';
 import { config } from '../config';
 import { Result } from '../models/result';
 
-export class MySqlDal implements IDal {
+export class MySqlDal extends AbstractDal implements IDal {
    private _conn = new Connection();
 
    public getLinks(): Promise<ILink[]> {
@@ -31,16 +32,6 @@ export class MySqlDal implements IDal {
          [link],
       );
       return result[0]?.[0];
-   }
-
-   public async getLinkByHash(hash: string): Promise<string | undefined> {
-      const entry = await this.getEntryByHash(hash);
-      return entry?.link;
-   }
-
-   public async getHashByLink(link: string): Promise<string | undefined> {
-      const entry = await this.getEntryByLink(link);
-      return entry?.hash;
    }
 
    public async createNewLink(link: string): Promise<Result> {

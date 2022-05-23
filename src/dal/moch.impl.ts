@@ -1,10 +1,11 @@
+import { AbstractDal } from './abstract.impl';
 import { IDal, ILink } from './typings';
 import { generateHash } from './utils';
 
 import { config } from '../config';
 import { Result } from '../models/result';
 
-export class MochDal implements IDal {
+export class MochDal extends AbstractDal implements IDal {
    private _db: ILink[] = [];
 
    public getLinks(): Promise<ILink[]> {
@@ -19,16 +20,6 @@ export class MochDal implements IDal {
    public getEntryByLink(link: string): Promise<ILink | undefined> {
       const entry = this._db.find((item) => item.link === link);
       return Promise.resolve(entry);
-   }
-
-   public async getLinkByHash(hash: string): Promise<string | undefined> {
-      const entry = await this.getEntryByHash(hash);
-      return entry?.link;
-   }
-
-   public async getHashByLink(link: string): Promise<string | undefined> {
-      const entry = await this.getEntryByLink(link);
-      return entry?.hash;
    }
 
    public async createNewLink(link: string): Promise<Result> {
