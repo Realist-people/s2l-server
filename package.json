@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/muturgan/s2l.git"
+    "url": "git+https://github.com/Realist-people/s2l-server.git"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/muturgan/s2l/issues"
+    "url": "https://github.com/Realist-people/s2l-server/issues"
   },
-  "homepage": "https://github.com/muturgan/s2l#readme",
+  "homepage": "https://github.com/Realist-people/s2l-server#readme",
   "dependencies": {
     "mysql2": "^2.3.3"
   },
