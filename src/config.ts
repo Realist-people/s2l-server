@@ -54,6 +54,18 @@ if (!DB_TIME) {
    throw new Error('DB_TIME enviroment variable is not set');
 }
 
+
+// BLOCKCHAIN
+const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
+if (!CONTRACT_ADDRESS) {
+   throw new Error('CONTRACT_ADDRESS enviroment variable is not set');
+}
+
+const SIGNER_KEY = process.env.SIGNER_KEY;
+if (!SIGNER_KEY) {
+   throw new Error('SIGNER_KEY enviroment variable is not set');
+}
+
 export const config = Object.freeze({
    // APPLICATION
    APP_PORT,
@@ -66,4 +78,8 @@ export const config = Object.freeze({
    DB_USER,
    DB_PASS,
    DB_TIME,
+
+   // BLOCKCHAIN
+   CONTRACT_ADDRESS,
+   SIGNER_KEY,
 });

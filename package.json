@@ -11,10 +11,11 @@
     "npm": "^6.14.15"
   },
   "scripts": {
-    "build": "(rm -rf dist || npx rimraf dist) && tsc -P tsconfig.build.json && npm run test",
+    "build": "(rm -rf dist || npx rimraf dist) && tsc -P tsconfig.build.json",
     "dev": "export $(cat .env | xargs) && nodemon",
     "dev_moch": "export $(cat .env | xargs) && export NODE_ENV=test && nodemon",
     "start": "export $(cat .env | xargs) && node dist/server.js",
+    "tt": "export $(cat .env | xargs) && node dist/tests/b/blockchain.impl.test.js",
     "test": "metatests dist/tests/*.spec.js && xv dist && echo \"all test are ok!\""
   },
   "repository": {
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/Realist-people/s2l-server#readme",
   "dependencies": {
+    "ethers": "^5.6.9",
     "mysql2": "^2.3.3"
   },
   "devDependencies": {
