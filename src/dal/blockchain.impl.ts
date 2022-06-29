@@ -7,7 +7,7 @@ import { IDal, ILink } from './typings';
 import { config } from '../config';
 import { Result } from '../models/result';
 
-const provider = new ethers.providers.InfuraProvider('rinkeby');
+const provider = new ethers.providers.InfuraProvider('rinkeby', config.INFURA_ID);
 const signer = new ethers.Wallet(config.SIGNER_KEY, provider);
 const contract = new ethers.Contract(config.CONTRACT_ADDRESS, abi, signer) as S2lStorage;
 

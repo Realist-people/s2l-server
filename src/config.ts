@@ -66,6 +66,11 @@ if (!SIGNER_KEY) {
    throw new Error('SIGNER_KEY enviroment variable is not set');
 }
 
+const INFURA_ID = process.env.INFURA_ID;
+if (!INFURA_ID) {
+   throw new Error('INFURA_ID enviroment variable is not set');
+}
+
 export const config = Object.freeze({
    // APPLICATION
    APP_PORT,
@@ -82,4 +87,5 @@ export const config = Object.freeze({
    // BLOCKCHAIN
    CONTRACT_ADDRESS,
    SIGNER_KEY,
+   INFURA_ID,
 });
