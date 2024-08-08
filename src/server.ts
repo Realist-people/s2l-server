@@ -1,4 +1,4 @@
-import http = require('http');
+import http = require('node:http');
 
 import { config } from './config';
 import { dal } from './dal';

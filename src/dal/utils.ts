@@ -1,4 +1,4 @@
-import crypto = require('crypto');
+import crypto = require('node:crypto');
 
 const BITES_LENGTH = 4;
 
